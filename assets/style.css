@@ -1,0 +1,36 @@
+body{
+    background-color: aquamarine;
+}
+
+header, .header{
+    color: rgb(0, 255, 64);
+    border: 2px solid red;
+    /* padding: 45px; */
+    /* width: 500px; */
+    height: 300px;
+    background-color: pink;
+    /* margin: 10px; */
+}
+
+.row.title
+
+.rock-header p {
+    background-color: pink;
+}
+
+p{
+    background-color: lightgrey;
+    /* width: 150px;
+    height: 150px; */
+    border: 25px solid rgb(26, 128, 0);
+    padding: 25px;
+    /* margin: 25px; */
+    width: 100%;
+    /* clear: all; */
+    text-align: center;
+}
+
+.panel-title{
+    background-color: rgb(35, 126, 142);
+
+}
