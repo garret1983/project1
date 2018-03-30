@@ -1,64 +1,160 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>project1</title>
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Bootstrap CDN-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Firebase Reference -->
-    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <br>
-      <!-- Jumbotron Title -->
-      <div class="jumbotron">
-        <h1 class="text-center">this is our site</h1>
-        <h3 class="text-center">you can search for things</h3>
-      </div>
-      
 
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">search for somehting</h3>
-              <div col-sm-2></div>
-              <div col-sm-2></div>
-              <div col-sm-2></div>
-              <div col-sm-2></div>
-              <div col-sm-2></div>
-              <div col-sm-2></div>
-            </div>
-            <div class="panel-body">
-              <form>
-                <div class="form-group">
-                  <label for="first-search">some search</label>
-                  <input class="form-control" id="first-search" type="text">
-                </div>
-                <div class="form-group">
-                    <label for="second-search">another search</label>
-                    <input class="form-control" id="second-search" type="text">
-                  </div> 
-                <div class="form-group">
-                    <label for="third-search">yet another search</label>
-                    <input class="form-control" id="third-search" type="text">
-                  </div> 
-                  <div class="form-group">
-                    <label for="fourth-search">last search</label>
-                    <input class="form-control" id="fourth-search" type="text">
-                  </div>  
-                <button class="btn btn-primary" id="submitbutton" type="submit">Submit</button>
-              </form>
-            </div>
+<head>
+  <meta charset="UTF-8">
+  <title>project1</title>
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Bootstrap CDN-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Firebase Reference -->
+  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <br>
+    <!-- Jumbotron Title -->
+    <div class="jumbotron">
+      <h1 class="text-center">You Wanna Rock???</h1>
+      <h3 class="text-center">search for upcoming events below</h3>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Search for Upcomming Events</h3>
+            <div col-sm-2></div>
+            <div col-sm-2></div>
+            <div col-sm-2></div>
+            <div col-sm-2></div>
+            <div col-sm-2></div>
+            <div col-sm-2></div>
+          </div>
+          <div class="panel-body">
+            <form>
+              <div class="form-group">
+                <label for="first-search">Event Seach</label>
+                <input class="form-control" id="first-search" type="text">
+              </div>
+              <div class="form-group">
+                <label for="second-search">Location</label>
+                <input class="form-control" id="second-search" type="text">
+              </div>
+              <!-- <div class="form-group">
+                <label for="third-search">yet another search</label>
+                <input class="form-control" id="third-search" type="text">
+              </div>
+              <div class="form-group">
+                <label for="fourth-search">last search</label>
+                <input class="form-control" id="fourth-search" type="text">
+              </div> -->
+              <button class="btn btn-primary" id="submitbutton" type="submit">Search</button>
+                
+            </form>
           </div>
         </div>
       </div>
     </div>
-    
-    <script src="assets/project.js"></script>
-  </body>
+  </div>
+
+  <div id="googleMap" style="width:40%;height:250px;"></div>
+
+<script>
+
+function myMap() {
+var mapProp= {
+    center:new google.maps.LatLng(32.715736,-117.161087),
+    zoom:10,
+};
+
+
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDrbDbmKvV--aXzByi0KA2UnJgs6t2qeg&callback=myMap"></script>
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/project.js"></script>
+<script>
+  
+    //JamBase API access
+    // var apiKey = 'rd4cbvwrqcws2awychydytcu';
+    // var zipcode = 92102;
+    // var queryURL = "http://api.jambase.com/venues?zipCode=" + zipcode + "&page=0&api_key=" + apiKey; -->
+
+    // $.ajax({
+    //   url: queryURL,
+    //   method: "GET"
+    // }).then(function (response) {
+    //   console.log(response);
+
+    //   var results = response.Venues;
+    //   console.log(results)
+    // });
+
+    //var apiKey = "AIzaSyDDrbDbmKvV--aXzByi0KA2UnJgs6t2qeg";
+    //var googleQueryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=50000&types=venues&name=fo&key=AIzaSyDNapfN0EoPw9nVEKqfANCL4dTNjNDU06U";
+    //var zipcode = 92102;
+
+    // $.ajax({
+    //   url: googleQueryURL,
+    //   method: "GET",
+    //   contentType: 'jsonp'
+    // }).then(function (response) {
+    //   console.log("from google places", response);
+    // });
+
+    //proxy url for the class
+    //var apiURL = 'https://proxy-cbc.herokuapp.com/proxy';
+
+
+    // $.ajax({
+    //   url: apiURL,
+    //   method: 'POST',
+    //   data: {
+    //     'url': googleQueryURL
+    //   }
+    // }).done(function (response) {
+    //   console.log("from proxy", response);
+    // })
+
+    //  .then(function(response) {
+
+// Log the queryURL
+// console.log(queryURL);
+
+// // Log the resulting object
+// console.log(response);
+
+// $(".city").html("<h1>" + response.name + " City Details</h1>");
+// $(".location").text("location: " + response.location);
+// $(".zipCode").text("zipCode: " + response.zipCode);
+
+
+// // Log the data in the console as well
+// console.log("location: " + response.location);
+// console.log("zipCode: " + response.main.zipCode);
+// //console.log("Temperature (F): " + response.main.temp);
+
+    // }); 
+
+
+
+
+   </script>
+
+
+
+</body>
+
 </html>
