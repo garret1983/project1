@@ -38,11 +38,11 @@ function myMap() {
   });
 
   var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(), 
+    position: new google.maps.LatLng(),
     map: map,
     title: 'hello world!'
 
-  }); 
+  });
 
   marker.setMap(map);
 
@@ -55,19 +55,21 @@ function myMap() {
   }, callback);
 }
 
-// $("#submitbutton").click("click", function (event) {
-//   event.preventDefault();
-//   //console.log("test")
-//   createMarker('event')
+$("#submitbutton").click("click", function (event) {
+  event.preventDefault();
+  //console.log("test")
+  createMarker('event')
 
-function callback(results, status) {
-  if (status === google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
+  function callback(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i]);
+      }
     }
   }
-}
-//console.log("results")
+
+});
+console.log("results")
 
 function createMarker(place) {
   var myLatLng = place.geometry, location
@@ -83,10 +85,10 @@ function createMarker(place) {
   });
 }
 
-// $("#submitbutton").on("click", function () {
-//   event.preventDefault();
-//   //console.log("test")
-//   createMarker("place");
+$("#submitbutton").on("click", function () {
+  event.preventDefault();
+  //console.log("test")
+  createMarker("place");
 
   eventType = $("#first-search").val().trim();
   location = $("#second-search").val().trim();
@@ -99,7 +101,7 @@ function createMarker(place) {
     // yetAnotherSearch: yetAnotherSearch,
     // lastSearch: lastSearch
   });
-//  });
+});
 //console.log(eventType)
 
 database.ref().on("child_added", function (childSnapshot) {
@@ -162,7 +164,7 @@ $.ajax({
   console.log("from proxy", response);
 
 
-}); 
+});
 
 
 
