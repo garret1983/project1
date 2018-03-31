@@ -55,10 +55,10 @@ function myMap() {
   }, callback);
 }
 
-$("#submitbutton").click("click", function (event) {
-  event.preventDefault();
-  //console.log("test")
-  createMarker('event')
+// $("#submitbutton").click("click", function (event) {
+//   event.preventDefault();
+//   //console.log("test")
+//   createMarker('event')
 
   function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -68,7 +68,8 @@ $("#submitbutton").click("click", function (event) {
     }
   }
 
-});
+//});
+
 console.log("results")
 
 function createMarker(place) {
@@ -85,23 +86,23 @@ function createMarker(place) {
   });
 }
 
-$("#submitbutton").on("click", function () {
-  event.preventDefault();
-  //console.log("test")
-  createMarker("place");
+// $("#submitbutton").on("click", function () {
+//   event.preventDefault();
+//   //console.log("test")
+//   createMarker("place");
 
-  eventType = $("#first-search").val().trim();
-  location = $("#second-search").val().trim();
-  // yetAnotherSearch = $("#third-search").val().trim();
-  // lastSearch = $("#fourth-search").val().trim();
-  database.ref().push({
+//   eventType = $("#first-search").val().trim();
+//   location = $("#second-search").val().trim();
+//   // yetAnotherSearch = $("#third-search").val().trim();
+//   // lastSearch = $("#fourth-search").val().trim();
+//   database.ref().push({
 
-    eventType: eventType,
-    location: location,
-    // yetAnotherSearch: yetAnotherSearch,
-    // lastSearch: lastSearch
-  });
-});
+//     eventType: eventType,
+//     location: location,
+//     // yetAnotherSearch: yetAnotherSearch,
+//     // lastSearch: lastSearch
+//   });
+// });
 //console.log(eventType)
 
 database.ref().on("child_added", function (childSnapshot) {
