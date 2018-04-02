@@ -46,14 +46,7 @@
                 <label for="second-search">Location</label>
                 <input class="form-control" id="second-search" type="text">
               </div>
-              <!-- <div class="form-group">
-                <label for="third-search">yet another search</label>
-                <input class="form-control" id="third-search" type="text">
-              </div>
-              <div class="form-group">
-                <label for="fourth-search">last search</label>
-                <input class="form-control" id="fourth-search" type="text">
-              </div> -->
+            
               <button class="btn btn-primary" id="submitbutton" type="submit">Location Search</button>
             </form>
           </div>
@@ -85,66 +78,7 @@
   <script type="text/javascript" src="assets/project.js"></script>
   <script>
 
-//     //JamBase API access
-//      var apiKey = 'rd4cbvwrqcws2awychydytcu';
-//     var zipcode = 92102;
-//     var queryURL = "http://api.jambase.com/venues?zipCode=" + zipcode + "&page=0&api_key=" + apiKey; 
 
-//     $.ajax({
-//       url: queryURL,
-//       method: "GET"
-//     }).then(function (response) {
-//       console.log(response);
-
-//       var results = response.Venues;
-//       console.log(results)
-//     });
-
-//     var apiKey = "AIzaSyDDrbDbmKvV--aXzByi0KA2UnJgs6t2qeg";
-//     var googleQueryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=50000&types=venues&name=fo&key=AIzaSyDNapfN0EoPw9nVEKqfANCL4dTNjNDU06U";
-//     var zipcode = 92102;
-
-//     $.ajax({
-//       url: googleQueryURL,
-//       method: "GET",
-//       contentType: 'jsonp'
-//     }).then(function (response) {
-//       console.log("from google places", response);
-//     }); 
-
-//     //proxy url for the class
-//     var apiURL = 'https://proxy-cbc.herokuapp.com/proxy';
-
-
-//     $.ajax({
-//       url: apiURL,
-//       method: 'POST',
-//       data: {
-//         'url': googleQueryURL
-//       }
-//     }).done(function (response) {
-//       console.log("from proxy", response);
-//     })
-
-//      .then(function(response) {
-
-// //Log the queryURL
-// console.log(queryURL);
-
-// // Log the resulting object
-// console.log(response);
-
-// $(".city").html("<h1>" + response.name + " City Details</h1>");
-// $(".location").text("location: " + response.location);
-// $(".zipCode").text("zipCode: " + response.zipCode);
-
-
-// // Log the data in the console as well
-// console.log("location: " + response.location);
-// console.log("zipCode: " + response.main.zipCode);
-// //console.log("Temperature (F): " + response.main.temp);
-
-//     }); 
 
 
 
@@ -155,4 +89,3 @@
 
 </html>
 
-<!-- google places api AIzaSyADXGUUar2X5r0ucoDWfu_L_Rzn4hwiF0E -->
