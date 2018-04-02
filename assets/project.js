@@ -20,44 +20,42 @@ var lat = "";
 var lng = "";
 // var yetAnotherSearch = "";
 // var lastSearch = "";
+console.log(map);
+
+
 
 $("#submitbutton").on("click", function (event) {
   event.preventDefault();
   //console.log("test")
-  createMarker('event')
+  // createMarker('event')
 
   //  $('#submitbutton').on('click', function(event) {  
   //   event.preventDefault()
 
   var eventType = $('#first-search').val();
   console.log(eventType)
-  var location = $('#second-search').val();
+  var searchLocation = $('#second-search').val();
   console.log(location)
 
   var geocoder = new google.maps.Geocoder();
   geocoder.geocode({
-    'address': location
+    'address': searchLocation
   }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       lat = results[0].geometry.location.lat()
       lng = results[0].geometry.location.lng()
+      getLocationData(lat, lng);
     }
-    console.log(lng)
   });
 
+
+
+});
+
+function getLocationData(lat, long) {
   var apiURL = 'https://proxy-cbc.herokuapp.com/proxy';
-  // var apiKey = "AIzaSyDDrbDbmKvV--aXzByi0KA2UnJgs6t2qeg";
-  var googleQueryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lng + "&radius=10000&name=" + eventType + "&key=AIzaSyDNapfN0EoPw9nVEKqfANCL4dTNjNDU06U";
-  // var zipcode = 92102;
-  console.log(eventType)
-
-
-
-
-
-
-
-
+  var googleQueryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + long + "&radius=10000&name=" + eventType + "&key=AIzaSyDNapfN0EoPw9nVEKqfANCL4dTNjNDU06U";
+  
   $.ajax({
     url: apiURL,
     method: 'POST',
@@ -66,47 +64,45 @@ $("#submitbutton").on("click", function (event) {
     }
   }).done(function (response) {
     console.log("from proxy", response);
-
-
+    for(var i = 0; i < response.data.results.length; i++) {
+      console.log(response.data.results[i]);
+      var markerData = response.data.results[i];
+      createMarker(markerData);
+    }
   });
-
-})
-
-//});
+}
 
 
-
-var map;
 var infowindow;
 
-function myMap() {
-  var myLatLng = { lat: 32.715736, lng: -117.161087 };
+// function myMap() {
+//   var myLatLng = { lat: 32.715736, lng: -117.161087 };
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 10,
-    center: myLatLng
+//   map = new google.maps.Map(document.getElementById('map'), {
+//     zoom: 10,
+//     center: myLatLng
 
-  });
+//   });
 
 
 
-  var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(),
-    map: map,
-    title: 'hello world!'
+//   var marker = new google.maps.Marker({
+//     position: new google.maps.LatLng(),
+//     map: map,
+//     title: 'hello world!'
 
-  });
+//   });
 
-  marker.setMap(map);
+//   marker.setMap(map);
 
-  infowindow = new google.maps.InfoWindow();
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch({
-    location: myLatLng,
-    radius: 500,
-    type: ['venue']
-  }, callback);
-}
+//   infowindow = new google.maps.InfoWindow();
+//   var service = new google.maps.places.PlacesService(map);
+//   service.nearbySearch({
+//     location: myLatLng,
+//     radius: 500,
+//     type: ['venue']
+//   }, callback);
+// }
 
 // $("#submitbutton").click("click", function (event) {
 //   event.preventDefault();
@@ -126,10 +122,10 @@ function callback(results, status) {
 //console.log("results")
 
 function createMarker(place) {
-  var myLatLng = place.geometry, location
+  //var myLatLng = place.geometry, location;
   var marker = new google.maps.Marker({
     map: map,
-    position: place.geometry
+    position: place.geometry.location
   });
   //console.log("location")
 
