@@ -15,15 +15,66 @@ var database = firebase.database();
 
 var eventType = "";
 var Location = "";
+var userChoice = "";
+var lat = "";
+var lng = "";
 // var yetAnotherSearch = "";
 // var lastSearch = "";
 
-$("#submitbutton").click("click", function (event) {
+$("#submitbutton").on("click", function (event) {
   event.preventDefault();
   //console.log("test")
   createMarker('event')
 
+  //  $('#submitbutton').on('click', function(event) {  
+  //   event.preventDefault()
+
+  var eventType = $('#first-search').val();
+  console.log(eventType)
+  var location = $('#second-search').val();
+  console.log(location)
+
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({
+    'address': location
+  }, function (results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      lat = results[0].geometry.location.lat()
+      lng = results[0].geometry.location.lng()
+    }
+    console.log(lng)
+  });
+
+  var apiURL = 'https://proxy-cbc.herokuapp.com/proxy';
+  // var apiKey = "AIzaSyDDrbDbmKvV--aXzByi0KA2UnJgs6t2qeg";
+  var googleQueryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lng + "&radius=10000&name=" + eventType + "&key=AIzaSyDNapfN0EoPw9nVEKqfANCL4dTNjNDU06U";
+  // var zipcode = 92102;
+  console.log(eventType)
+
+
+
+
+
+
+
+
+  $.ajax({
+    url: apiURL,
+    method: 'POST',
+    data: {
+      'url': googleQueryURL
+    }
+  }).done(function (response) {
+    console.log("from proxy", response);
+
+
+  });
+
 })
+
+//});
+
+
 
 var map;
 var infowindow;
@@ -36,6 +87,8 @@ function myMap() {
     center: myLatLng
 
   });
+
+
 
   var marker = new google.maps.Marker({
     position: new google.maps.LatLng(),
@@ -60,17 +113,17 @@ function myMap() {
 //   //console.log("test")
 //   createMarker('event')
 
-  function callback(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        createMarker(results[i]);
-      }
+function callback(results, status) {
+  if (status === google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
     }
   }
+}
 
-//});
+// });
 
-console.log("results")
+//console.log("results")
 
 function createMarker(place) {
   var myLatLng = place.geometry, location
@@ -129,43 +182,26 @@ var apiKey = 'rd4cbvwrqcws2awychydytcu';
 var zipcode = 92102;
 var queryURL = "http://api.jambase.com/venues?zipCode=" + zipcode + "&page=0&api_key=" + apiKey;
 
-$.ajax({
-  url: queryURL,
-  method: "GET"
-}).then(function (response) {
-  console.log(response);
 
-  var results = response.Venues;
-  console.log(results)
-});
 
-var apiKey = "AIzaSyDDrbDbmKvV--aXzByi0KA2UnJgs6t2qeg";
-var googleQueryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=50000&types=food&name=fo&key=AIzaSyDNapfN0EoPw9nVEKqfANCL4dTNjNDU06U";
-var zipcode = 92102;
+// var apiKey = "AIzaSyDDrbDbmKvV--aXzByi0KA2UnJgs6t2qeg";
+// var googleQueryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=50000&types=" + userChoice  + "&name=fo&key=AIzaSyDNapfN0EoPw9nVEKqfANCL4dTNjNDU06U";
+// var zipcode = 92102;
+// console.log(userChoice)
 
-$.ajax({
-  url: googleQueryURL,
-  method: "GET",
-  contentType: 'jsonp'
-}).then(function (response) {
-  console.log("from google places", response);
-});
+// $.ajax({
+//   url: googleQueryURL,
+//   method: "GET",
+//   contentType: 'jsonp'
+// }).then(function (response) {
+//   console.log("from google places", response);
+// });
 
 //proxy url for the class
 var apiURL = 'https://proxy-cbc.herokuapp.com/proxy';
 
 
-$.ajax({
-  url: apiURL,
-  method: 'POST',
-  data: {
-    'url': googleQueryURL
-  }
-}).done(function (response) {
-  console.log("from proxy", response);
 
-
-});
 
 
 
