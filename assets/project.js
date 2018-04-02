@@ -12,27 +12,27 @@
   var database = firebase.database();
 
   // expanding navbar:
-  $('input[type="text"]').focus(function() {
-    $(this).animate({
-        width: $(this).width()*2.5,
-        height: $(this).height()*1.5
-    });
-    var newFontSize = parseInt($(this).css("font-size"));
-    newFontSize = newFontSize * 1.5;
-    $(this).css({
-        'font-size': newFontSize
-    });
-});
+//   $('input[type="text"]').focus(function() {
+//     $(this).animate({
+//         width: $(this).width()*2.5,
+//         height: $(this).height()*1.5
+//     });
+//     var newFontSize = parseInt($(this).css("font-size"));
+//     newFontSize = newFontSize * 1.5;
+//     $(this).css({
+//         'font-size': newFontSize
+//     });
+// });
 
-$('input[type="text"]').blur(function() {
-    $(this).animate({
-        width: $(this).width()/2.5,
-        height: $(this).height()/1.5
-    });
-    var newFontSize = parseInt($(this).css("font-size"));
-    newFontSize = newFontSize / 1.5;
-    $(this).css({
-        'font-size': newFontSize
+// $('input[type="text"]').blur(function() {
+//     $(this).animate({
+//         width: $(this).width()/2.5,
+//         height: $(this).height()/1.5
+//     });
+//     var newFontSize = parseInt($(this).css("font-size"));
+//     newFontSize = newFontSize / 1.5;
+//     $(this).css({
+//         'font-size': newFontSize
     });
 });
 

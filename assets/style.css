@@ -1,36 +1,38 @@
-body{
-    background-color: aquamarine;
-}
-
-header, .header{
-    color: rgb(0, 255, 64);
-    border: 2px solid red;
-    /* padding: 45px; */
-    /* width: 500px; */
-    height: 300px;
-    background-color: pink;
-    /* margin: 10px; */
-}
-
-.row.title
-
-.rock-header p {
-    background-color: pink;
-}
-
-p{
-    background-color: lightgrey;
-    /* width: 150px;
-    height: 150px; */
-    border: 25px solid rgb(26, 128, 0);
+.page-header{
+    background-color: lightblue;
+    margin: 10px;
+    margin-left: 60px;
+    margin-right: 80px;
+    height: 150px;
+    text-align: center;
     padding: 25px;
-    /* margin: 25px; */
-    width: 100%;
-    /* clear: all; */
+
+
+}
+#myHeader{
+    text-align: center;
+    color: white;
+}
+p{
+    color: white;
     text-align: center;
 }
 
-.panel-title{
-    background-color: rgb(35, 126, 142);
-
+.zipCode{
+    border: 2px solid black;
+    float: left;
 }
+.p{
+    background-color: lightgray;
+    width: 550px;
+    height: 550px;
+    border: 2px solid green;
+    text-align: center;
+    
+}
+
+.map{
+    height: 100px;
+    width: 100px;
+}
+
