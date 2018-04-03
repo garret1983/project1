@@ -1,137 +1,141 @@
+$(document).ready(function () {
+    $(document).on("click", ".venue-data", function () {
+        // $("#map").empty();
 
+        //Clear markers
+        //On click add marker for clicked venue
 
-var config = {
-  apiKey: "AIzaSyAHrta93HNxWis2qKRoXMAWRxJwOwTzdJY",
-  authDomain: "project1-7d97b.firebaseapp.com",
-  databaseURL: "https://project1-7d97b.firebaseio.com",
-  projectId: "project1-7d97b",
-  storageBucket: "",
-  messagingSenderId: "758804415452"
-};
-firebase.initializeApp(config);
+        // on click
+        // clear all the pins
+        // zoom in on lat/long of selected address 
+            //get the lat/long from the address clicked
+            var latLong = {
+                lat : parseFloat($(this).attr("data-latitude")),
+                lng: parseFloat($(this).attr("data-longitude"))
+            };
+            console.log(latLong); 
+        // show new pin
+        // $(this).attr()
+        // marker.setMap(null);
+        addMarkerAndZoom(latLong, 16);
+        
+        function initMap() {
+            var markers = [];
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: { lat: 38.899265, lng: -77.1546525 }
+            });
 
-var database = firebase.database();
+            map.addListener("click", function (e) {
 
+                //Remove previous marker and add new one
+                // removeMarker(null, markers)
+                var latitude = e.latLng.lat();
+                var longitude = e.latLng.lng();
+                console.log("Latitude: " + latitude + " Longitude: " + longitude);
+                var marker = addMarker(map, { lat: latitude, lng: longitude });
+                markers.push(marker);
+            });
 
-var eventType = "";
-var Location = "";
-var userChoice = "";
-var lat = "";
-var lng = "";
+            function removeMarker(map, markers) {
+                for (var i = 0; i < markers.length; i++) {
+                    makers[i].setMap(map);
+                }
+            }
+            function addMarker(map, center) {
+                var marker = new google.maps.Marker({
+                    position: center,
+                    map: map
+                });
+            }
+        }
 
-console.log(map);
+        function addMarkerAndZoom(center, zoom) {
+            // var marker = new google.maps.Marker({
+            //     position: center,
+            //     map: map
+            // });
+            map.setCenter(center);
+            map.setZoom(zoom);
+        }
+    });
 
-
-
-$("#submitbutton").on("click", function (event) {
-  event.preventDefault();
-
-
-  var eventType = $('#first-search').val();
-  console.log(eventType)
-  var searchLocation = $('#second-search').val();
-
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode({
-    'address': searchLocation
-  }, function (results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      lat = results[0].geometry.location.lat()
-      lng = results[0].geometry.location.lng()
-      getLocationData(lat, lng, eventType);
+    function addMarker(center) {
+        marker = new google.maps.Marker({
+            position: center,
+            map: map
+        });
     }
-  });
+
+    function eventSearch() {
+        $("#run-search").on("click", function (event) {
+            event.preventDefault();
+
+            // Captures the users input for zipcode and raduis search.
+            var userZipcodeInput = $("#zipcode-input").val().trim();
+            var userRadiusInput = $("#radius-input").val().trim();
+            console.log("User entered zipcode: " + userZipcodeInput);
+            console.log("User entered radius: " + userRadiusInput);
+
+            //JamBase API access
+            // var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
+            var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
+            // var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
+
+            var jamBaseQueryURL = "http://api.jambase.com/events?zipCode=" +
+                userZipcodeInput + "&radius=" +
+                userRadiusInput + "&page=0&api_key=" + jamBaseApiKey;
+
+            // clear out table for new results
+            $("#event-table > tbody").empty();
+
+            $.ajax({
+                url: jamBaseQueryURL,
+                method: "GET"
+            }).then(function (response) {
+
+            var results = response.Events; //Creates a new object.
+            // console.log(results.length);
+            console.log(results)
+
+            for (var i = 0; i < results.length; i++) {
+                var eventDate = results[i].Date;
+                var artistsName = results[i].Artists[0].Name;
+                var venueName = results[i].Venue.Name;
+                var venueAddress = results[i].Venue.Address;
+                var venueCity = results[i].Venue.City;
+                var venueState = results[i].Venue.State;
+                var url = results[i].TicketUrl;
+                var latitude = results[i].Venue.Latitude;
+                var longitude = results[i].Venue.Longitude;
+                
+                addMarker({lat: latitude, lng: longitude})
 
 
+                var prettyEventDate = moment(eventDate).format("MMMM DD, YYYY");
+                // console.log(prettyEventDate);
+                // console.log(moment);
+                // console.log(eventDate);
 
+                var venueRow = $("<tr/>");
+                venueRow.addClass("venue-data");
+                venueRow.attr("data-latitude", results[i].Venue.Latitude);
+                venueRow.attr("data-longitude", results[i].Venue.Longitude);
+
+                venueRow.append("<td>" +
+                    prettyEventDate + "</td><td>" +
+                    artistsName + "</td><td>" +
+                    venueName + "</td><td class='address'>" +
+                    venueAddress + "</td><td>" +
+                    venueCity + "</td><td>" +
+                    venueState + "</td>");
+
+                $("#event-table > tbody").append(venueRow);
+                console.log(venueRow);
+
+            }
+        });
+    });
+    } eventSearch();
+    //NO CODE BELOW THIS LINE
 });
-
-function getLocationData(lat, long, eventName) {
-  var apiURL = 'https://proxy-cbc.herokuapp.com/proxy';
-  var googleQueryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + long + "&radius=10000&name=" + eventName + "&key=AIzaSyDNapfN0EoPw9nVEKqfANCL4dTNjNDU06U";
-  
-  $.ajax({
-    url: apiURL,
-    method: 'POST',
-    data: {
-      'url': googleQueryURL
-    }
-  }).done(function (response) {
-    console.log("from proxy", response);
-    for(var i = 0; i < response.data.results.length; i++) {
-      console.log(response.data.results[i]);
-      var markerData = response.data.results[i];
-      createMarker(markerData);
-    }
-  });
-}
-
-
-var infowindow;
-
-
-
-function callback(results, status) {
-  if (status === google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
-    }
-  }
-}
-
-
-
-function createMarker(place) {
- 
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
-
-
-  google.maps.event.addListener(marker, 'click', function () {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
-
-
-
-database.ref().on("child_added", function (childSnapshot) {
-
-  console.log(childSnapshot.val().firstsearch);
-  console.log(childSnapshot.val().secondsearch);
-
-  var newRow = $('<tr>');
-
-  $(newRow).append("<td class='somesearch'>" + childSnapshot.val().eventType +
-    " </td><td class= 'anotherSearch'>" + childSnapshot.val().location +
-    " </td>");
-
-  $("tbody").append(newRow);
-
-}, function (errorObject) {
-
-});
-
-
-var apiKey = 'rd4cbvwrqcws2awychydytcu';
-var zipcode = 92102;
-var queryURL = "http://api.jambase.com/venues?zipCode=" + zipcode + "&page=0&api_key=" + apiKey;
-
-
-
-
-var apiURL = 'https://proxy-cbc.herokuapp.com/proxy';
-
-
-
-
-
-
-
-
-
-
-
-

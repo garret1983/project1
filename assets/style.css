@@ -1,38 +1,55 @@
-.page-header{
-    background-color: lightblue;
-    margin: 10px;
-    margin-left: 60px;
-    margin-right: 80px;
+body{
+    /* background-color: darkslategray; */
+    background-image: url("http://www.geomarketing.com/wp-content/uploads/2015/10/concert-audience.jpg");
+
+}
+
+.header{
+    color: antiquewhite;
+    background-color: darkorange;
     height: 150px;
-    text-align: center;
-    padding: 25px;
-
-
-}
-#myHeader{
-    text-align: center;
-    color: white;
-}
-p{
-    color: white;
-    text-align: center;
+    margin: 30px;
+    margin-left: 150px;
+    margin-right: 150px;
+    border: 3px solid red;
 }
 
-.zipCode{
-    border: 2px solid black;
-    float: left;
-}
-.p{
-    background-color: lightgray;
-    width: 550px;
-    height: 550px;
-    border: 2px solid green;
+.header{
+    color: black;
+    font-size: 85px;
     text-align: center;
     
 }
 
-.map{
-    height: 100px;
-    width: 100px;
+p>small{
+    color: yellow;
+    font-size: 40px;
+    
 }
+/* event search bar */
+.panel-title{
+    background-color: yellow;
+    color: black;
+    height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.dailyUpdates th, tr, td {
+    padding: 20px;
+    font-size: 15px;
+}
+
+
+
+/* map result area */
+iframe {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+.dailyUpdates tr:hover {
+    background-color: yellow;
+};
 
