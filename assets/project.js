@@ -1,4 +1,19 @@
+
 $(document).ready(function () {
+
+
+    var config = {
+        apiKey: "AIzaSyAHrta93HNxWis2qKRoXMAWRxJwOwTzdJY",
+        authDomain: "project1-7d97b.firebaseapp.com",
+        databaseURL: "https://project1-7d97b.firebaseio.com",
+        projectId: "project1-7d97b",
+        storageBucket: "project1-7d97b.appspot.com",
+        messagingSenderId: "758804415452"
+      };
+      firebase.initializeApp(config);
+
+    var database = firebase.database();
+
     $(document).on("click", ".venue-data", function () {
         // $("#map").empty();
 
@@ -8,17 +23,19 @@ $(document).ready(function () {
         // on click
         // clear all the pins
         // zoom in on lat/long of selected address 
-            //get the lat/long from the address clicked
-            var latLong = {
-                lat : parseFloat($(this).attr("data-latitude")),
-                lng: parseFloat($(this).attr("data-longitude"))
-            };
-            console.log(latLong); 
+        //get the lat/long from the address clicked
+        var latLong = {
+            lat: parseFloat($(this).attr("data-latitude")),
+            lng: parseFloat($(this).attr("data-longitude"))
+        };
+        database.ref().set(latLong);
+
+        console.log(latLong);
         // show new pin
         // $(this).attr()
         // marker.setMap(null);
         addMarkerAndZoom(latLong, 16);
-        
+
         function initMap() {
             var markers = [];
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -96,48 +113,48 @@ $(document).ready(function () {
                 method: "GET"
             }).then(function (response) {
 
-            var results = response.Events; //Creates a new object.
-            // console.log(results.length);
-            console.log(results)
+                var results = response.Events; //Creates a new object.
+                // console.log(results.length);
+                console.log(results)
 
-            for (var i = 0; i < results.length; i++) {
-                var eventDate = results[i].Date;
-                var artistsName = results[i].Artists[0].Name;
-                var venueName = results[i].Venue.Name;
-                var venueAddress = results[i].Venue.Address;
-                var venueCity = results[i].Venue.City;
-                var venueState = results[i].Venue.State;
-                var url = results[i].TicketUrl;
-                var latitude = results[i].Venue.Latitude;
-                var longitude = results[i].Venue.Longitude;
-                
-                addMarker({lat: latitude, lng: longitude})
-                map.setCenter({lat: latitude, lng: longitude});
+                for (var i = 0; i < results.length; i++) {
+                    var eventDate = results[i].Date;
+                    var artistsName = results[i].Artists[0].Name;
+                    var venueName = results[i].Venue.Name;
+                    var venueAddress = results[i].Venue.Address;
+                    var venueCity = results[i].Venue.City;
+                    var venueState = results[i].Venue.State;
+                    var url = results[i].TicketUrl;
+                    var latitude = results[i].Venue.Latitude;
+                    var longitude = results[i].Venue.Longitude;
 
-                var prettyEventDate = moment(eventDate).format("MMMM DD, YYYY");
-                // console.log(prettyEventDate);
-                // console.log(moment);
-                // console.log(eventDate);
+                    addMarker({ lat: latitude, lng: longitude })
+                    map.setCenter({ lat: latitude, lng: longitude });
 
-                var venueRow = $("<tr/>");
-                venueRow.addClass("venue-data");
-                venueRow.attr("data-latitude", results[i].Venue.Latitude);
-                venueRow.attr("data-longitude", results[i].Venue.Longitude);
+                    var prettyEventDate = moment(eventDate).format("MMMM DD, YYYY");
+                    // console.log(prettyEventDate);
+                    // console.log(moment);
+                    // console.log(eventDate);
 
-                venueRow.append("<td>" +
-                    prettyEventDate + "</td><td>" +
-                    artistsName + "</td><td>" +
-                    venueName + "</td><td class='address'>" +
-                    venueAddress + "</td><td>" +
-                    venueCity + "</td><td>" +
-                    venueState + "</td>");
+                    var venueRow = $("<tr/>");
+                    venueRow.addClass("venue-data");
+                    venueRow.attr("data-latitude", results[i].Venue.Latitude);
+                    venueRow.attr("data-longitude", results[i].Venue.Longitude);
 
-                $("#event-table > tbody").append(venueRow);
-                console.log(venueRow);
+                    venueRow.append("<td>" +
+                        prettyEventDate + "</td><td>" +
+                        artistsName + "</td><td>" +
+                        venueName + "</td><td class='address'>" +
+                        venueAddress + "</td><td>" +
+                        venueCity + "</td><td>" +
+                        venueState + "</td>");
 
-            }
+                    $("#event-table > tbody").append(venueRow);
+                    //console.log(venueRow);
+
+                }
+            });
         });
-    });
     } eventSearch();
     //NO CODE BELOW THIS LINE
 });
