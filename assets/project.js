@@ -1,81 +1,63 @@
+$(document).ready(function () {
 
-  var config = {
-    apiKey: "AIzaSyAHrta93HNxWis2qKRoXMAWRxJwOwTzdJY",
-    authDomain: "project1-7d97b.firebaseapp.com",
-    databaseURL: "https://project1-7d97b.firebaseio.com",
-    projectId: "project1-7d97b",
-    storageBucket: "",
-    messagingSenderId: "758804415452"
-  };
-  firebase.initializeApp(config);
+  function eventSearch() {
+      $("#run-search").on("click", function (event) {
+          event.preventDefault();
 
-  var database = firebase.database();
+          // Captures the users input for zipcode and raduis search.
+          var userZipcodeInput = $("#zipcode-input").val().trim();
+          var userRadiusInput = $("#radius-input").val().trim();
+          // console.log("User entered zipcode: "+userZipcodeInput);
+          // console.log("User entered radius: "+userRadiusInput);
 
-  // expanding navbar:
-//   $('input[type="text"]').focus(function() {
-//     $(this).animate({
-//         width: $(this).width()*2.5,
-//         height: $(this).height()*1.5
-//     });
-//     var newFontSize = parseInt($(this).css("font-size"));
-//     newFontSize = newFontSize * 1.5;
-//     $(this).css({
-//         'font-size': newFontSize
-//     });
-// });
+          //JamBase API access
+          // var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
+          // var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
+          var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
 
-// $('input[type="text"]').blur(function() {
-//     $(this).animate({
-//         width: $(this).width()/2.5,
-//         height: $(this).height()/1.5
-//     });
-//     var newFontSize = parseInt($(this).css("font-size"));
-//     newFontSize = newFontSize / 1.5;
-//     $(this).css({
-//         'font-size': newFontSize
-    });
-});
+          var jamBaseQueryURL = "http://api.jambase.com/events?zipCode=" +
+              userZipcodeInput + "&radius=" +
+              userRadiusInput + "&page=0&api_key=" + jamBaseApiKey;
 
-var someSearch = "";
-var anotherSearch = "";
-var yetAnotherSearch = "";
-var lastSearch = 0;
+          // clear out table for new results
+          $("#event-table > tbody").empty();
 
-$("#submitbutton").on("click", function() {
-    event.preventDefault();
-    console.log("test")
+          $.ajax({
+              url: jamBaseQueryURL,
+              method: "GET"
+          }).then(function (response) {
 
-    someSearch = $("#first-search").val().trim();
-      anotherSearch = $("#second-search").val().trim();
-      yetAnotherSearch = $("#third-search").val().trim();
-      lastSearch = $("#fourth-search").val().trim();
-      database.ref().push({
+              var results = response.Events; //Creates a new object.
+              // console.log(results.length);
+              console.log(results)
 
-        someSearch: someSearch,
-        anotherSearch: anotherSearch,
-        yetAnotherSearch: yetAnotherSearch,
-        lastSearch: lastSearch
+              for (var i = 0; i < results.length; i++) {
+                  var eventDate = results[i].Date;
+                  var artistsName = results[i].Artists[0].Name;
+                  var venueName = results[i].Venue.Name;
+                  var venueAddress = results[i].Venue.Address;
+                  var venueCity = results[i].Venue.City;
+                  var venueState = results[i].Venue.State;
+                  var url = results[i].TicketUrl;
+
+
+                  var prettyEventDate = moment(eventDate).format("MMMM DD, YYYY");
+                  // console.log(prettyEventDate);
+                  // console.log(moment);
+                  // console.log(eventDate);
+
+                  $("#event-table > tbody").append("<tr><td>" +
+                      prettyEventDate + "</td><td>" +
+                      artistsName + "</td><td>" +
+                      venueName + "</td><td>" +
+                      venueAddress + "</td><td>" +
+                      venueCity + "</td><td>" +
+                      venueState + "</td></tr>");
+              }
+          });
       });
+  } eventSearch();
+  //NO CODE BELOW THIS LINE
 });
-
-database.ref().on("child_added", function(childSnapshot) {
-
-    console.log(childSnapshot.val().someSearch);
-    console.log(childSnapshot.val().anotherSearch);
-    console.log(childSnapshot.val().yetAnotherSearch);
-    console.log(childSnapshot.val().lastSearch);
-
-    var newRow = $('<tr>');
-
-    $(newRow).append("<td class='somesearch'>" + childSnapshot.val().someSearch +
-    " </td><td class= 'anotherSearch'>" + childSnapshot.val().anotherSearch +
-    " </td><td class= 'yetanothersearch'>" + childSnapshot.val().yetAnotherSearch +
-    " </td><td class= 'lastsearch'>" + childSnapshot.val().lastSearch + " </td>");
- 
-    $("tbody").append(newRow);
-    console.log(newRow);
-  }, function(errorObject) {
-      console.log("Errors handled: " + errorObject.code);
-  });
 
   
