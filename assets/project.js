@@ -71,6 +71,8 @@ $(document).ready(function () {
         $("#run-search").on("click", function (event) {
             event.preventDefault();
 
+       
+
             // Captures the users input for zipcode and raduis search.
             var userZipcodeInput = $("#zipcode-input").val().trim();
             var userRadiusInput = $("#radius-input").val().trim();
@@ -79,8 +81,8 @@ $(document).ready(function () {
 
             //JamBase API access
             // var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
-            var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
-            // var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
+            // var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
+            var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
 
             var jamBaseQueryURL = "https://api.jambase.com/events?zipCode=" +
                 userZipcodeInput + "&radius=" +
