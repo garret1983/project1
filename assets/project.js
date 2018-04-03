@@ -77,10 +77,14 @@ $(document).ready(function () {
             console.log("User entered zipcode: " + userZipcodeInput);
             console.log("User entered radius: " + userRadiusInput);
 
+            
+
+
             //JamBase API access
             // var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
-            var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
+            // var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
             // var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
+            var jamBaseApiKey = "87jvmqkbmt8g2hvathpm4pdm";
 
             var jamBaseQueryURL = "https://api.jambase.com/events?zipCode=" +
                 userZipcodeInput + "&radius=" +
@@ -137,5 +141,11 @@ $(document).ready(function () {
         });
     });
     } eventSearch();
+
+    document.getElementById("#clear-all").onclick = function() {
+        document.getElementById("#zipcode-input").reset();
+        document.getElementById("#radius-input").reset();
+     };
+
     //NO CODE BELOW THIS LINE
 });
