@@ -110,7 +110,7 @@ $(document).ready(function () {
                 var longitude = results[i].Venue.Longitude;
                 
                 addMarker({lat: latitude, lng: longitude})
-
+                map.setCenter({lat: latitude, lng: longitude});
 
                 var prettyEventDate = moment(eventDate).format("MMMM DD, YYYY");
                 // console.log(prettyEventDate);
