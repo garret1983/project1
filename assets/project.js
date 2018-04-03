@@ -82,7 +82,7 @@ $(document).ready(function () {
             var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
             // var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
 
-            var jamBaseQueryURL = "http://api.jambase.com/events?zipCode=" +
+            var jamBaseQueryURL = "https://api.jambase.com/events?zipCode=" +
                 userZipcodeInput + "&radius=" +
                 userRadiusInput + "&page=0&api_key=" + jamBaseApiKey;
 
