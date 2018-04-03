@@ -1,10 +1,12 @@
 body{
-    background-color: darkslategray;
+    /* background-color: darkslategray; */
+    background-image: url("http://www.geomarketing.com/wp-content/uploads/2015/10/concert-audience.jpg");
+
 }
 
 .header{
     color: antiquewhite;
-    background-color: rgb(0, 204, 255);
+    background-color: darkorange;
     height: 150px;
     margin: 30px;
     margin-left: 150px;
