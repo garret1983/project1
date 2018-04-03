@@ -87,7 +87,7 @@ $(document).ready(function () {
                         venueState + "</td>");
 
                     $("#event-table > tbody").append(venueRow);
-                    console.log(venueRow);
+                    // console.log(venueRow);
 
                 }
             });
