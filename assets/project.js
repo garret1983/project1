@@ -1,30 +1,59 @@
+
 $(document).ready(function () {
 
     $(document).on("click", ".venue-data", function () {
 
-        // On click clear all the map markers and zoom in on lat/long of selected address 
-        //then get the lat/long from the address clicked.
-        // var markers = [];
+        var config = {
+            apiKey: "AIzaSyAHrta93HNxWis2qKRoXMAWRxJwOwTzdJY",
+            authDomain: "project1-7d97b.firebaseapp.com",
+            databaseURL: "https://project1-7d97b.firebaseio.com",
+            projectId: "project1-7d97b",
+            storageBucket: "project1-7d97b.appspot.com",
+            messagingSenderId: "758804415452"
+        };
+        firebase.initializeApp(config);
+
+        var database = firebase.database();
+
+        // $("#map").empty();
+
+        //Clear markers
+        //On click add marker for clicked venue
+
+        // on click
+        // clear all the pins
+        // zoom in on lat/long of selected address 
+        //get the lat/long from the address clicked
         var latLong = {
             lat: parseFloat($(this).attr("data-latitude")),
             lng: parseFloat($(this).attr("data-longitude"))
         };
+        database.ref().set(latLong);
 
-        addMarkerAndZoom(latLong, 16); //Call function to add marker and zoom in on maker on click event.
         console.log(latLong);
+        // show new pin
+        // $(this).attr()
+        // marker.setMap(null);
+        addMarkerAndZoom(latLong, 16);
 
-        // markers.push(marker);
+        function initMap() {
+            var markers = [];
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: { lat: 38.899265, lng: -77.1546525 }
+            });
 
-        // function removeMarker(map, markers) {
-        //     for (var i = 0; i < markers.length; i++) {
-        //         makers[i].setMap(map);
-        //     }
-        //     markers = [];
-        // }
+            // On click clear all the map markers and zoom in on lat/long of selected address 
+            //then get the lat/long from the address clicked.
+            // var markers = [];
+            var latLong = {
+                lat: parseFloat($(this).attr("data-latitude")),
+                lng: parseFloat($(this).attr("data-longitude"))
+            };
 
-        function addMarkerAndZoom(center, zoom) {
-            map.setCenter(center);
-            map.setZoom(zoom);
+            addMarkerAndZoom(latLong, 16); //Call function to add marker and zoom in on maker on click event.
+            console.log(latLong);
+
         }
     });
 
@@ -56,7 +85,7 @@ $(document).ready(function () {
             // var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
             // var jamBaseApiKey = '87jvmqkbmt8g2hvathpm4pdm';
 
-            var jamBaseQueryURL = "http://api.jambase.com/events?zipCode=" +
+            var jamBaseQueryURL = "https://api.jambase.com/events?zipCode=" +
                 userZipcodeInput + "&radius=" +
                 userRadiusInput + "&page=0&api_key=" + jamBaseApiKey;
 
@@ -105,7 +134,6 @@ $(document).ready(function () {
                         venueState + "</td>");
 
                     $("#event-table > tbody").append(venueRow);
-                    console.log(venueRow);
 
                 }
             });
