@@ -1,20 +1,20 @@
 
 $(document).ready(function () {
 
-
-    var config = {
-        apiKey: "AIzaSyAHrta93HNxWis2qKRoXMAWRxJwOwTzdJY",
-        authDomain: "project1-7d97b.firebaseapp.com",
-        databaseURL: "https://project1-7d97b.firebaseio.com",
-        projectId: "project1-7d97b",
-        storageBucket: "project1-7d97b.appspot.com",
-        messagingSenderId: "758804415452"
-      };
-      firebase.initializeApp(config);
-
-    var database = firebase.database();
-
     $(document).on("click", ".venue-data", function () {
+
+        var config = {
+            apiKey: "AIzaSyAHrta93HNxWis2qKRoXMAWRxJwOwTzdJY",
+            authDomain: "project1-7d97b.firebaseapp.com",
+            databaseURL: "https://project1-7d97b.firebaseio.com",
+            projectId: "project1-7d97b",
+            storageBucket: "project1-7d97b.appspot.com",
+            messagingSenderId: "758804415452"
+        };
+        firebase.initializeApp(config);
+
+        var database = firebase.database();
+
         // $("#map").empty();
 
         //Clear markers
@@ -43,37 +43,17 @@ $(document).ready(function () {
                 center: { lat: 38.899265, lng: -77.1546525 }
             });
 
-            map.addListener("click", function (e) {
+            // On click clear all the map markers and zoom in on lat/long of selected address 
+            //then get the lat/long from the address clicked.
+            // var markers = [];
+            var latLong = {
+                lat: parseFloat($(this).attr("data-latitude")),
+                lng: parseFloat($(this).attr("data-longitude"))
+            };
 
-                //Remove previous marker and add new one
-                // removeMarker(null, markers)
-                var latitude = e.latLng.lat();
-                var longitude = e.latLng.lng();
-                console.log("Latitude: " + latitude + " Longitude: " + longitude);
-                var marker = addMarker(map, { lat: latitude, lng: longitude });
-                markers.push(marker);
-            });
+            addMarkerAndZoom(latLong, 16); //Call function to add marker and zoom in on maker on click event.
+            console.log(latLong);
 
-            function removeMarker(map, markers) {
-                for (var i = 0; i < markers.length; i++) {
-                    makers[i].setMap(map);
-                }
-            }
-            function addMarker(map, center) {
-                var marker = new google.maps.Marker({
-                    position: center,
-                    map: map
-                });
-            }
-        }
-
-        function addMarkerAndZoom(center, zoom) {
-            // var marker = new google.maps.Marker({
-            //     position: center,
-            //     map: map
-            // });
-            map.setCenter(center);
-            map.setZoom(zoom);
         }
     });
 
@@ -84,6 +64,10 @@ $(document).ready(function () {
         });
     }
 
+    function clear() {
+        $("#event-table > tbody").empty();
+    }
+
     function eventSearch() {
         $("#run-search").on("click", function (event) {
             event.preventDefault();
@@ -91,13 +75,15 @@ $(document).ready(function () {
             // Captures the users input for zipcode and raduis search.
             var userZipcodeInput = $("#zipcode-input").val().trim();
             var userRadiusInput = $("#radius-input").val().trim();
+
             console.log("User entered zipcode: " + userZipcodeInput);
             console.log("User entered radius: " + userRadiusInput);
 
             //JamBase API access
-            // var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
-            var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
+            var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
+            // var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
             // var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
+            // var jamBaseApiKey = '87jvmqkbmt8g2hvathpm4pdm';
 
             var jamBaseQueryURL = "https://api.jambase.com/events?zipCode=" +
                 userZipcodeInput + "&radius=" +
@@ -148,11 +134,15 @@ $(document).ready(function () {
                         venueState + "</td>");
 
                     $("#event-table > tbody").append(venueRow);
-                    //console.log(venueRow);
 
                 }
             });
         });
-    } eventSearch();
+
+
+    }
+    eventSearch();
+    $("#clear-all").on("click", clear);
+
     //NO CODE BELOW THIS LINE
 });
