@@ -1,54 +1,26 @@
 $(document).ready(function () {
+
     $(document).on("click", ".venue-data", function () {
-        // $("#map").empty();
 
-        //Clear markers
-        //On click add marker for clicked venue
-
-        // on click
-        // clear all the pins
-        // zoom in on lat/long of selected address 
-        //get the lat/long from the address clicked
+        // On click clear all the map markers and zoom in on lat/long of selected address 
+        //then get the lat/long from the address clicked.
+        // var markers = [];
         var latLong = {
             lat: parseFloat($(this).attr("data-latitude")),
             lng: parseFloat($(this).attr("data-longitude"))
         };
+
+        addMarkerAndZoom(latLong, 16); //Call function to add marker and zoom in on maker on click event.
         console.log(latLong);
-        // show new pin
-        // $(this).attr()
-        // marker.setMap(null);
-        addMarkerAndZoom(latLong, 16);
 
-        function initMap() {
-            var markers = [];
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
-                center: { lat: 38.899265, lng: -77.1546525 }
-            });
+        // markers.push(marker);
 
-            map.addListener("click", function (e) {
-
-                //Remove previous marker and add new one
-                // removeMarker(null, markers)
-                var latitude = e.latLng.lat();
-                var longitude = e.latLng.lng();
-                console.log("Latitude: " + latitude + " Longitude: " + longitude);
-                var marker = addMarker(map, { lat: latitude, lng: longitude });
-                markers.push(marker);
-            });
-
-            function removeMarker(map, markers) {
-                for (var i = 0; i < markers.length; i++) {
-                    makers[i].setMap(map);
-                }
-            }
-            function addMarker(map, center) {
-                var marker = new google.maps.Marker({
-                    position: center,
-                    map: map
-                });
-            }
-        }
+        // function removeMarker(map, markers) {
+        //     for (var i = 0; i < markers.length; i++) {
+        //         makers[i].setMap(map);
+        //     }
+        //     markers = [];
+        // }
 
         function addMarkerAndZoom(center, zoom) {
             map.setCenter(center);
@@ -63,11 +35,9 @@ $(document).ready(function () {
         });
     }
 
-
     function clear() {
         $("#event-table > tbody").empty();
     }
-
 
     function eventSearch() {
         $("#run-search").on("click", function (event) {
@@ -76,14 +46,15 @@ $(document).ready(function () {
             // Captures the users input for zipcode and raduis search.
             var userZipcodeInput = $("#zipcode-input").val().trim();
             var userRadiusInput = $("#radius-input").val().trim();
+
             console.log("User entered zipcode: " + userZipcodeInput);
             console.log("User entered radius: " + userRadiusInput);
 
             //JamBase API access
-            // var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
+            var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
             // var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
             // var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
-            var jamBaseApiKey = '87jvmqkbmt8g2hvathpm4pdm';
+            // var jamBaseApiKey = '87jvmqkbmt8g2hvathpm4pdm';
 
             var jamBaseQueryURL = "http://api.jambase.com/events?zipCode=" +
                 userZipcodeInput + "&radius=" +
