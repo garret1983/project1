@@ -99,7 +99,8 @@ $(document).ready(function () {
             //JamBase API access
             // var jamBaseApiKey = 'rd4cbvwrqcws2awychydytcu';
             // var jamBaseApiKey = 'erwbvawfptrfgmanwnwsd7xx';
-            var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
+            // var jamBaseApiKey = 'rgwerqp2yxbccsm5u8cfjruu';
+               var jamBaseApiKey = '87jvmqkbmt8g2hvathpm4pdm'; 
 
             var jamBaseQueryURL = "https://api.jambase.com/events?zipCode=" +
                 userZipcodeInput + "&radius=" +
